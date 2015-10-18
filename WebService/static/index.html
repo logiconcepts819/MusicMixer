@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mixing Web Interface</title>
+	<script src="//code.jquery.com/jquery-1.11.3.js"></script>
+	<script src="//code.jquery.com/jquery-migrate-1.2.1.js"></script>
+	<style type="text/css">
+		body {
+			font-family: Arial, Helvetica, sans-serif;
+			color: #00f;
+			background-image: url(music-wallpaper22.jpg);
+		}
+
+		.center {
+			text-align: center;
+		}
+
+		#songs {
+			width: 100%;
+			height: 300px;
+		}
+
+		#selectasong {
+			font-size: 20pt;
+		}
+	</style>
+</head>
+<body>
+	<p id="selectasong" class="center">Select a song or a set of songs to play below:</p>
+	<select id="songs" multiple="multiple">
+	</select>
+	<p class="center"><input type="button" id="play" value="Play Selected" onclick="play_songs();
+"/></p>
+	<script language="JavaScript">
+		function populate_selection(list)
+		{
+			$.each(list, function(key, value) {
+				$('#songs')
+					.append($("<option></option>")
+					.attr("value", key)
+					.text(value));
+			});
+		}
+
+		function get_songs()
+		{
+			$.ajax({
+				type: "GET",
+				url: "/v1/mixer/getSongs",
+				dataType: "json",
+				success: function(json) {
+					populate_selection(json.message);
+				}});
+		}
+
+		function play_songs()
+		{
+			$('#songs > option:selected').each(function() {
+				$.ajax({
+					type: "POST",
+					url: "/v1/mixer/addSong",
+					data: "filename=" + encodeURIComponent("/home/ron/Music/" + $(this).text()),
+					dataType: "json"
+					});
+			});
+		}
+
+		get_songs();
+	</script>
+</body>
+</html>
