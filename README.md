@@ -38,12 +38,13 @@ Building MusicMixer
 ===================
 
 This project contains several components: a C++ backend, a Qt frontend, a web
-server interface, and a Windows installer.
+server interface, and a Windows installer. MusicMixer fully supports Linux and
+partially supports Windows, but this project has never been tested on OS X.
 
 C++ backend prerequisites
 -------------------------
 
-* MinGW (for Windows only)
+* MinGW-w64 (for Windows only; not needed for Linux)
 * G++ with C++11 support
 * PortAudio (http://portaudio.com)
 * FFmpeg/LibAV (http://ffmpeg.org or http://libav.org)
@@ -67,7 +68,7 @@ Installer prerequisites
 -----------------------
 
 * All C++ backend and Qt frontend prerequisites
-* NSIS
+* NSIS (http://nsis.sf.net)
 
 Building the Qt frontend in Windows
 -----------------------------------
